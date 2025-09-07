@@ -2,14 +2,98 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mon Site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Luxe</title>
+
+  <!-- Feuille de style principale -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Font Awesome pour les icônes sociales -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-  <h1>Bienvenue sur mon site !</h1>
-  <button onclick="saluer()">Clique ici</button>
 
+  <!-- Conteneur vidéo en arrière-plan -->
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline class="background-video">
+      <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+      Votre navigateur ne supporte pas la vidéo HTML5.
+    </video>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="logo.png" alt="Logo de l'entreprise" />
+      </div>
+
+      <button class="menu-toggle" aria-label="Ouvrir le menu">
+        &#9776;
+      </button>
+
+      <ul class="menu">
+        <li><a href="#realisations">Réalisations</a></li>
+        <li><a href="#histoire">Notre histoire</a></li>
+        <li><a href="#partenaires">Partenaires</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- SECTION ACCUEIL -->
+  <section class="overlay">
+    <h1>Entreprise H</h1>
+    <p>Excellence & Élégance</p>
+  </section>
+
+  <!-- SECTIONS DE CONTENU (à compléter) -->
+  <section id="realisations">
+    <h2>Nos réalisations</h2>
+    <p>Contenu des réalisations...</p>
+  </section>
+
+  <section id="histoire">
+    <h2>Notre histoire</h2>
+    <p>Contenu de l’histoire...</p>
+  </section>
+
+  <section id="partenaires">
+    <h2>Partenaires</h2>
+    <p>Liste de partenaires...</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Infos de contact...</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <ul class="footer-menu">
+      <li><a href="#realisations">Réalisations</a></li>
+      <li><a href="#histoire">Notre histoire</a></li>
+      <li><a href="#partenaires">Partenaires</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="footer-social">
+      <p>Retrouvez-nous sur :</p>
+      <div class="social-icons">
+        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
   <script src="script.js"></script>
 </body>
 </html>
