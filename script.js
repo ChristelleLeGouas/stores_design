@@ -1,3 +1,4 @@
+// Overlay d'accueil
 const overlay = document.querySelector('.overlay');
 if (overlay) {
   overlay.addEventListener('click', () => {
@@ -5,69 +6,73 @@ if (overlay) {
   });
 }
 
+// Menu hamburger
 const menuToggle = document.querySelector('.menu-toggle');
 const menu = document.querySelector('.menu');
-
 if (menuToggle && menu) {
-  menuToggle.addEventListener('click', () => {
-    menu.classList.toggle('active');
-  });
+  menuToggle.addEventListener('click', () => menu.classList.toggle('active'));
 }
 
-// Fonction pour ajouter un projet via POST
+// Ajouter un projet via POST
 function ajouterProjet() {
-  const postUrl = 'https://script.google.com/macros/s/TON_DEPLOYMENT_ID/exec';
-
+  const postUrl = 'https://script.google.com/macros/s/AKfycbxAwbUeWiQagbqaIQqatdIxUido-0EwAi7QFy0WcO1SUQ51ETpe8_LlCQX-NCZ-IYc/exec';
   const nouveauProjet = {
     id: "3",
     Titre: "Projet C",
     Description: "Un projet ajouté via POST",
-    Image: "https://drive.google.com/uc?export=view&id=TON_IMAGE_ID"
+    Image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=800&q=80"
   };
 
   fetch(postUrl, {
     method: "POST",
     body: JSON.stringify(nouveauProjet),
-    headers: {
-      "Content-Type": "application/json"
-    }
+    headers: { "Content-Type": "application/json" }
   })
-  .then(response => response.json())
-  .then(result => {
-    console.log("Projet ajouté :", result);
-    alert("Projet ajouté avec succès !");
-  })
-  .catch(error => {
-    console.error("Erreur lors de l'ajout :", error);
-  });
+  .then(res => res.json())
+  .then(() => afficherProjets())
+  .catch(err => console.error("Erreur POST :", err));
 }
 
-// URL de l'API GET
-const getUrl = 'https://script.google.com/macros/s/AKfycby8ZidoVpJo68Zfg4uZw4to8nHBkL6agfMErVN5ix5DfqoqkxbKQFP43qahcltpRGyo/exec';
+// Afficher les projets depuis Google Sheet (sauter la ligne d’en-tête)
+function afficherProjets() {
+  const getUrl = 'https://script.google.com/macros/s/AKfycbxAwbUeWiQagbqaIQqatdIxUido-0EwAi7QFy0WcO1SUQ51ETpe8_LlCQX-NCZ-IYc/exec';
+  const container = document.getElementById('liste-projets');
+  container.innerHTML = '';
 
-fetch(getUrl)
-  .then(response => response.json())
-  .then(data => {
-    const container = document.getElementById('liste-projets');
-    const headers = data[0];
-    const rows = data.slice(1);
+  fetch(getUrl)
+    .then(res => res.json())
+    .then(data => {
+      if (!data || data.length <= 1) throw "Aucun projet trouvé";
 
-    rows.forEach(row => {
-      const projet = {};
-      row.forEach((value, index) => {
-        projet[headers[index]] = value.trim();
+      const headers = data[0]; // Ligne d’en-tête
+      const rows = data.slice(1); // Toutes les lignes sauf la première
+
+      rows.forEach(row => {
+        const projet = {};
+        row.forEach((val, i) => { projet[headers[i]] = val; });
+
+        const card = document.createElement('div');
+        card.classList.add('projet');
+        card.innerHTML = `
+          <img src="${projet.Image}" alt="${projet.Titre || 'Projet'}" />
+          <h3>${projet.Titre || 'Sans titre'}</h3>
+          <p>${projet.Description || ''}</p>
+        `;
+        container.appendChild(card);
       });
-
-      console.log("Image URL:", projet.Image);
-
+    })
+    .catch(() => {
+      // Projet test
       const card = document.createElement('div');
       card.classList.add('projet');
       card.innerHTML = `
-        <img src="${projet.Image}" alt="${projet.Titre}" />
-        <h3>${projet.Titre}</h3>
-        <p>${projet.Description}</p>
+        <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=800&q=80" alt="Projet Test" />
+        <h3>Projet Test</h3>
+        <p>Description test avec image publique.</p>
       `;
       container.appendChild(card);
     });
-  })
-  .catch(error => console.error(error));
+}
+
+// Appel initial au chargement
+document.addEventListener("DOMContentLoaded", afficherProjets);
