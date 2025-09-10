@@ -186,5 +186,118 @@ header {
       font-size: 1.2rem;
       width: 100%;
     }
+
+    .projets-container {
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+}
+
+.projets-container h2 {
+  margin-bottom: 40px;
+}
+
+#liste-projets {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.projet {
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 20px;
+  width: 280px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.projet img {
+  width: 100%;      /* s’adapte à la largeur de la carte */
+  height: auto;     /* proportionnel */
+  display: block;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+
+.projet h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #b8d137;
+}
+
+.projet p {
+  font-size: 1rem;
+}
+
+.projet {
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 20px;
+  width: 280px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.projet img { width:100%; height:auto; display:block; }
+
+.projet h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #b8d137;
+}
+
+.projet p {
+  font-size: 1rem;
+  color: white;
+}
+
+
   }
+
+  .projets-container {
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  .projets-container h2 {
+    margin-bottom: 40px;
+  }
+  
+  #liste-projets {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .projet {
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 20px;
+    width: 280px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  
+  .projet img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+  
+  .projet h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #b8d137;
+  }
+  
+  .projet p {
+    font-size: 1rem;
+  }
+  
   
