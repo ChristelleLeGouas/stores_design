@@ -1,78 +1,91 @@
-// Overlay d'accueil
-const overlay = document.querySelector('.overlay');
+// --- Overlay ---
+const overlay = document.querySelector(".overlay");
 if (overlay) {
-  overlay.addEventListener('click', () => {
-    alert('Bienvenue sur le site de notre entreprise de luxe ! ✨');
+  overlay.addEventListener("click", () => {
+    alert("Bienvenue sur le site de notre entreprise de luxe ! ✨");
   });
 }
 
-// Menu hamburger
-const menuToggle = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.menu');
+// --- Menu hamburger ---
+const menuToggle = document.querySelector(".menu-toggle");
+const menu = document.querySelector(".menu");
 if (menuToggle && menu) {
-  menuToggle.addEventListener('click', () => menu.classList.toggle('active'));
+  menuToggle.addEventListener("click", () => {
+    menu.classList.toggle("active");
+  });
 }
 
-// Ajouter un projet via POST
+// --- URL de ton Apps Script ---
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyoCMuLoP2BF8_YdoBnf2srHcVk-219Ttj1Ri5OY-XBsdH3XsCkZf1To-I5ht8Uqk7/exec";
+
+// --- Ajouter un projet via POST ---
 function ajouterProjet() {
-  const postUrl = 'https://script.google.com/macros/s/AKfycbxAwbUeWiQagbqaIQqatdIxUido-0EwAi7QFy0WcO1SUQ51ETpe8_LlCQX-NCZ-IYc/exec';
   const nouveauProjet = {
-    id: "3",
-    Titre: "Projet C",
+    id: "99",
+    Titre: "Projet Test",
     Description: "Un projet ajouté via POST",
-    Image: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=800&q=80"
+    Image: "https://picsum.photos/400/300"
   };
 
-  fetch(postUrl, {
+  fetch(SCRIPT_URL, {
     method: "POST",
     body: JSON.stringify(nouveauProjet),
     headers: { "Content-Type": "application/json" }
   })
-  .then(res => res.json())
-  .then(() => afficherProjets())
-  .catch(err => console.error("Erreur POST :", err));
+    .then(res => res.json())
+    .then(result => {
+      if (result.result === "success") {
+        alert("Projet ajouté avec succès !");
+        chargerProjets(); // Recharge la liste
+      } else {
+        console.error("Erreur serveur POST :", result.message);
+        alert("Erreur lors de l'ajout du projet !");
+      }
+    })
+    .catch(err => {
+      console.error("Erreur POST :", err);
+      alert("Impossible de contacter le serveur !");
+    });
 }
 
-// Afficher les projets depuis Google Sheet (sauter la ligne d’en-tête)
-function afficherProjets() {
-  const getUrl = 'https://script.google.com/macros/s/AKfycbxAwbUeWiQagbqaIQqatdIxUido-0EwAi7QFy0WcO1SUQ51ETpe8_LlCQX-NCZ-IYc/exec';
-  const container = document.getElementById('liste-projets');
-  container.innerHTML = '';
+// --- Charger les projets ---
+function chargerProjets() {
+  const container = document.getElementById("liste-projets");
+  container.innerHTML = '<div class="loader"></div>'; // spinner CSS
 
-  fetch(getUrl)
+  fetch(SCRIPT_URL)
     .then(res => res.json())
     .then(data => {
-      if (!data || data.length <= 1) throw "Aucun projet trouvé";
+      container.innerHTML = ""; // supprime le loader
 
-      const headers = data[0]; // Ligne d’en-tête
-      const rows = data.slice(1); // Toutes les lignes sauf la première
+      if (!Array.isArray(data) || data.length === 0) {
+        container.innerHTML = "<p>Aucun projet disponible pour le moment.</p>";
+        return;
+      }
 
-      rows.forEach(row => {
-        const projet = {};
-        row.forEach((val, i) => { projet[headers[i]] = val; });
+      data.forEach(projet => {
+        const titre = projet.Titre || "Titre manquant";
+        const description = projet.Description || "";
+        const image = projet.Image || "https://via.placeholder.com/400x300?text=Pas+d'image";
 
-        const card = document.createElement('div');
-        card.classList.add('projet');
+        const card = document.createElement("div");
+        card.classList.add("projet");
         card.innerHTML = `
-          <img src="${projet.Image}" alt="${projet.Titre || 'Projet'}" />
-          <h3>${projet.Titre || 'Sans titre'}</h3>
-          <p>${projet.Description || ''}</p>
+          <img src="${image}" alt="${titre}" />
+          <h3>${titre}</h3>
+          <p>${description}</p>
         `;
         container.appendChild(card);
       });
     })
-    .catch(() => {
-      // Projet test
-      const card = document.createElement('div');
-      card.classList.add('projet');
-      card.innerHTML = `
-        <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=800&q=80" alt="Projet Test" />
-        <h3>Projet Test</h3>
-        <p>Description test avec image publique.</p>
-      `;
-      container.appendChild(card);
+    .catch(err => {
+      console.error("Erreur GET :", err);
+      container.innerHTML = "<p>Impossible de charger les projets.</p>";
     });
 }
 
-// Appel initial au chargement
-document.addEventListener("DOMContentLoaded", afficherProjets);
+
+// --- Initialisation ---
+document.addEventListener("DOMContentLoaded", () => {
+  chargerProjets(); // Le footer est déjà visible immédiatement
+});
