@@ -17,10 +17,10 @@ body {
   /* Dégradé subtil et luxueux avec jaune, bleu canard, anthracite */
   background: linear-gradient(
     135deg,
-    rgba(233, 217, 4, 0.4) 0%,  /* jaune doux en bas */
-    #1C0F2B 25%,                /* bleu foncé milieu haut */
-    #0B1B2B 75%,                /* bleu anthracite milieu bas */
-    rgba(233, 217, 4, 0.4) 100%  /* jaune doux en bas */
+    rgba(233, 217, 4, 0.4) 0%,  
+    #1C0F2B 25%,                
+    #0B1B2B 75%,                
+    rgba(233, 217, 4, 0.4) 100%  
   );
   background-attachment: fixed;
   position: relative;
@@ -31,14 +31,12 @@ body::before {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background-image: url('https://www.transparenttextures.com/patterns/cloth-alike.png'); /* texture toile fine */
+  background-image: url('https://www.transparenttextures.com/patterns/cloth-alike.png');
   background-repeat: repeat;
-  opacity: 0.4; /* légèrement plus marquée */
+  opacity: 0.4;
   pointer-events: none;
   z-index: 0;
 }
-
-
 
 /* ============================
    HEADER
@@ -65,6 +63,7 @@ header {
 .logo img {
   height: 60px;
   width: auto;
+  border-radius: 10px;
 }
 
 /* Menu */
@@ -94,30 +93,6 @@ header {
   color: white;
   cursor: pointer;
 }
-
-/* ============================
-   VIDEO BACKGROUND
-============================ 
-.video-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.background-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(100%) brightness(0.4); /* Noir et blanc + sombre */
-
-
-
-
-
 
 /* ============================
    OVERLAY ACCUEIL
@@ -182,7 +157,7 @@ section p {
 }
 
 .projet {
-  background: rgba(0,0,0,0.6);
+  background: whitesmoke;
   border-radius: 10px;
   width: 280px;
   padding: 15px;
@@ -203,14 +178,47 @@ section p {
 }
 
 .projet h3 {
-  color: #b8d137;
+  color: #292137;
   margin-bottom: 8px;
   font-size: 1.3rem;
 }
 
 .projet p {
-  color: #fff;
-  font-size: 1rem;
+  color: grey;
+  font-size: 0.8rem;
+}
+
+/* ============================
+   PARTENAIRES
+============================ */
+.partenaires-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+  padding: 50px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.1));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.logo-partenaire {
+  width: 240px;
+  height: 120px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.9);
+  transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+}
+
+.logo-partenaire:hover {
+  transform: translateY(-5px) scale(1.05);
+  background-color: whitesmoke;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  filter: grayscale(0%);
 }
 
 /* ============================
@@ -270,7 +278,7 @@ section p {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 150px; /* ajuste selon la taille que tu veux */
+  height: 150px;
 }
 
 .loader::after {
@@ -287,7 +295,6 @@ section p {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 
 /* ============================
    RESPONSIVE
@@ -317,5 +324,11 @@ section p {
 
   .menu li a {
     font-size: 1.2rem;
+  }
+
+  .logo-partenaire {
+    width: 100px;
+    height: 50px;
+    padding: 10px;
   }
 }

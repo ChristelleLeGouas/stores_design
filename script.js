@@ -15,6 +15,17 @@ if (menuToggle && menu) {
   });
 }
 
+// --- Logos partenaires ---
+const logosPartenaires = [
+  "Bandalux.png",
+  "logo.png",
+  "Futurol.png",
+  "matest.webp",
+  "amb.webp",
+  "Luxaflex.png",
+  "Somfy.png"
+];
+
 // --- URL de ton Apps Script ---
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyoCMuLoP2BF8_YdoBnf2srHcVk-219Ttj1Ri5OY-XBsdH3XsCkZf1To-I5ht8Uqk7/exec";
 
@@ -36,7 +47,7 @@ function ajouterProjet() {
     .then(result => {
       if (result.result === "success") {
         alert("Projet ajouté avec succès !");
-        chargerProjets(); // Recharge la liste
+        chargerProjets();
       } else {
         console.error("Erreur serveur POST :", result.message);
         alert("Erreur lors de l'ajout du projet !");
@@ -51,13 +62,12 @@ function ajouterProjet() {
 // --- Charger les projets ---
 function chargerProjets() {
   const container = document.getElementById("liste-projets");
-  container.innerHTML = '<div class="loader"></div>'; // spinner CSS
+  container.innerHTML = '<div class="loader"></div>';
 
   fetch(SCRIPT_URL)
     .then(res => res.json())
     .then(data => {
-      container.innerHTML = ""; // supprime le loader
-
+      container.innerHTML = "";
       if (!Array.isArray(data) || data.length === 0) {
         container.innerHTML = "<p>Aucun projet disponible pour le moment.</p>";
         return;
@@ -84,8 +94,22 @@ function chargerProjets() {
     });
 }
 
+// --- Afficher logos partenaires ---
+function afficherPartenaires() {
+  const container = document.getElementById("liste-partenaires");
+  container.innerHTML = "";
+
+  logosPartenaires.forEach(filename => {
+    const img = document.createElement("img");
+    img.src = `img/${filename}`;
+    img.alt = "Logo partenaire";
+    img.classList.add("logo-partenaire");
+    container.appendChild(img);
+  });
+}
 
 // --- Initialisation ---
 document.addEventListener("DOMContentLoaded", () => {
-  chargerProjets(); // Le footer est déjà visible immédiatement
+  chargerProjets();
+  afficherPartenaires();
 });
